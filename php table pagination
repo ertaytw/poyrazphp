@@ -1,0 +1,37 @@
+                   $sql = "SELECT 
+                  ROW_NUMBER() OVER (ORDER BY CAST(top_players_score AS UNSIGNED) DESC) as top_players_rank,
+                  top_players_id,
+                  top_players_name,
+                  FORMAT(CAST(top_players_score AS UNSIGNED), 0, ' ') as top_players_score
+                  FROM 
+                  top_players 
+                  ORDER BY 
+                  CAST(top_players_score AS UNSIGNED) DESC";
+
+                  $result = mysqli_query($db, $sql);
+                   
+                   
+                   if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo '<tr>
+
+                            <th scope="row" class="border-b left-th font-medium whitespace-nowrap">' . $row["top_players_rank"] . '</th>
+                            <td class="border-b mid-th">' . $row["top_players_name"] . '</td>
+                            <th scope="row" class="border-b right-th">' . $row["top_players_score"] . '</th>
+
+                            </tr>';
+                        }
+                    } else {
+                        echo "0 result";
+                    }
+
+                    ?>
+
+
+
+<script type="text/javascript">
+    let table = new DataTable('#mytable');
+</script>
+
+    <script src="//cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="//cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
